@@ -71,11 +71,12 @@ public class AuthenticationController {
             (@Valid @RequestBody PasswordReset request,
              @AuthenticationPrincipal User user,
              @RequestParam String email) throws ConflictException, NoSuchException {
+        user.getEmail();
         return ResponseEntity.ok(authenticationService.updateUserPassword(request, email, user));
     }
     /** Admin registration **/
     @PostMapping("/admin/signup")
-    public ResponseEntity<String> registerAdmin(@Valid @RequestBody RegisterRequest request)
+    public ResponseEntity<String> registerAdmin(@RequestBody RegisterRequest request)
             throws ConflictException {
         log.info("registering user : {}", request);
         return ResponseEntity.ok(authenticationService.registerAdmin(request));

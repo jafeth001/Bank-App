@@ -9,6 +9,7 @@ import com.code.bankapp.model.User;
 import com.code.bankapp.repository.BankAccountRepository;
 import com.code.bankapp.repository.TransactionRepository;
 import com.code.bankapp.repository.UserRepository;
+import com.code.bankapp.util.RandomTransactionID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class TransactionService {
     private final UserRepository userRepository;
     private final BankAccountRepository bankAccountRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RandomTransactionID transactionID;
 
     public BankTransactions depositToAccount(BankTransactions bankTransactions, Long id)
             throws NoSuchException, ConflictException {
@@ -33,6 +35,7 @@ public class TransactionService {
             var transactions = BankTransactions
                     .builder()
                     .amount(bankTransactions.getAmount())
+                    .transactionID(transactionID.getSaltString())
                     .transactionPeriod(LocalDateTime.now())
                     .account(bankaccount)
                     .transactionType(TransactionType.DEPOSIT)
@@ -55,6 +58,7 @@ public class TransactionService {
             var transactions = BankTransactions
                     .builder()
                     .amount(bankTransactions.getAmount())
+                    .transactionID(transactionID.getSaltString())
                     .transactionPeriod(LocalDateTime.now())
                     .account(bankaccount)
                     .transactionType(TransactionType.WITHDRAW)
@@ -71,7 +75,7 @@ public class TransactionService {
         throw new ConflictException("account not active...");
     }
 
-    public BankTransactions transferFund(Long id,Long destId, BankTransactions bankTransactions)
+    public BankTransactions transferFund(Long id, Long destId, BankTransactions bankTransactions)
             throws NoSuchException, ConflictException {
         BankAccount bankaccount = bankAccountRepository.findById(id)
                 .orElseThrow(() -> new NoSuchException("bank account with id " + id + " not found"));
@@ -82,6 +86,7 @@ public class TransactionService {
                     .builder()
                     .amount(bankTransactions.getAmount())
                     .transactionPeriod(LocalDateTime.now())
+                    .transactionID(transactionID.getSaltString())
                     .account(bankaccount)
                     .transactionType(TransactionType.TRANSFER)
                     .build();
@@ -109,5 +114,9 @@ public class TransactionService {
 
     public Optional<BankTransactions> bankTransaction(Long id) {
         return transactionRepository.findById(id);
+    }
+
+    public Optional<BankTransactions> getBytransactionId(String transactionId) {
+        return transactionRepository.findBytransactionID(transactionId);
     }
 }

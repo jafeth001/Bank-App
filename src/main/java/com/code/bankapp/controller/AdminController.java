@@ -26,26 +26,31 @@ public class AdminController {
 
     @GetMapping("/users")
     public List<User> users(@AuthenticationPrincipal User user) throws NoSuchException {
+        user.getEmail();
         return accountService.findAllUsers();
     }
 
     @GetMapping("/account")
     public BankAccount getBankAccount(@AuthenticationPrincipal User user, @RequestParam Long accNo) throws NoSuchException {
+        user.getEmail();
         return accountService.findAccountByAccountNo(accNo);
     }
 
     @PutMapping("/deactivate")
     public String deactivateBankAccount(@AuthenticationPrincipal User user, @RequestParam Long id) throws NoSuchException {
+        user.getEmail();
         return accountService.deactivate(id);
     }
 
     @PutMapping("/activate")
     public String activateBankAccount(@AuthenticationPrincipal User user, @RequestParam Long id) throws NoSuchException {
+        user.getEmail();
         return accountService.activate(id);
     }
 
     @DeleteMapping("/delete")
     public Optional<String> deleteAccount(@AuthenticationPrincipal User user, @RequestParam Long id) {
+        user.getEmail();
         return accountService.deleteAccount(id);
     }
 }

@@ -26,10 +26,12 @@ public class AccountController {
             (@AuthenticationPrincipal User user, @RequestParam Long id)
             throws NoSuchException {
         log.info("creating bank account for user : {}",user);
+        user.getEmail();
         return ResponseEntity.ok(accountService.createAccount(id));
     }
     @GetMapping("/all")
     public List<BankAccount> getAccounts(@AuthenticationPrincipal User user) throws NoSuchException {
+        user.getEmail();
         return accountService.getAccounts();
     }
 
@@ -37,6 +39,7 @@ public class AccountController {
     public ResponseEntity<BankAccount> getAccountById(@AuthenticationPrincipal User user,@RequestParam Long id)
            throws NoSuchException {
         log.info("getting bank account with id: {}",id);
+        user.getEmail();
         return ResponseEntity.ok(accountService.getAccountById(id));
    }
 
