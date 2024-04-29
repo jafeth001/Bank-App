@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bank-app-k8s
+spec:
+  selector:
+    matchLabels:
+      app: bank-app-k8s
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: bank-app-k8s
+    spec:
+      containers:
+        - name: bank-app-k8s
+          image: jafethadet/bank-app:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
