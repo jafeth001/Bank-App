@@ -66,7 +66,8 @@ public class TransactionService {
             if (bankTransactions.getAmount() <= 0) {
                 throw new ConflictException("amount must be more than 0");
             } else if (bankaccount.getBalance() < bankTransactions.getAmount()) {
-                throw new ConflictException("insufficient amount to complete transaction... your bank balance is " + bankaccount.getBalance());
+                throw new ConflictException("insufficient amount to complete transaction... " +
+                        "your bank balance is " + bankaccount.getBalance());
             }
             bankaccount.setBalance(bankaccount.getBalance() - transactions.getAmount());
             bankAccountRepository.save(bankaccount);
@@ -93,7 +94,8 @@ public class TransactionService {
             if (bankTransactions.getAmount() <= 0) {
                 throw new ConflictException("amount must be more than 0");
             } else if (bankaccount.getBalance() < bankTransactions.getAmount()) {
-                throw new ConflictException("insufficient amount to complete transaction... your bank balance is " + bankaccount.getBalance());
+                throw new ConflictException("insufficient amount to complete transaction... " +
+                        "your bank balance is " + bankaccount.getBalance());
             }
             bankaccount.setBalance(bankaccount.getBalance() - bankTransactions.getAmount());
             destinationAcc.setBalance(destinationAcc.getBalance() + bankTransactions.getAmount());

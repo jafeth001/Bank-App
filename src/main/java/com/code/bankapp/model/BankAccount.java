@@ -23,7 +23,7 @@ public class BankAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Integer accountNumber;
+    private Long accountNumber;
     private double balance;
     private boolean active;
     @OneToOne

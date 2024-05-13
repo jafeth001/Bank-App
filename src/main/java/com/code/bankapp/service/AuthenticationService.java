@@ -26,7 +26,7 @@ public class AuthenticationService {
 
     public String registerUser(RegisterRequest request) throws ConflictException {
         var userExist = userRepository.findByEmail(request.getEmail());
-        if (!userExist.isPresent()) {
+        if (userExist.isEmpty()) {
             User user = User.builder()
                     .firstName(request.getFirstname())
                     .lastName(request.getLastname())

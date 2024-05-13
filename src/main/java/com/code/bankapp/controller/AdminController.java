@@ -2,6 +2,7 @@ package com.code.bankapp.controller;
 
 import com.code.bankapp.exception.ConflictException;
 import com.code.bankapp.exception.NoSuchException;
+import com.code.bankapp.kafka.producer.KafkaProducer;
 import com.code.bankapp.model.BankAccount;
 import com.code.bankapp.model.BankTransactions;
 import com.code.bankapp.model.User;
@@ -23,34 +24,43 @@ import java.util.Optional;
 public class AdminController {
     private final AccountService accountService;
     private final TransactionService transactionService;
+    private final KafkaProducer kafkaProducer;
 
     @GetMapping("/users")
-    public List<User> users(@AuthenticationPrincipal User user) throws NoSuchException {
-        user.getEmail();
-        return accountService.findAllUsers();
+    public ResponseEntity<List<User>> users(@AuthenticationPrincipal User user) throws NoSuchException {
+        return ResponseEntity.ok(accountService.findAllUsers());
     }
 
     @GetMapping("/account")
-    public BankAccount getBankAccount(@AuthenticationPrincipal User user, @RequestParam Long accNo) throws NoSuchException {
-        user.getEmail();
-        return accountService.findAccountByAccountNo(accNo);
+    public ResponseEntity<BankAccount> getBankAccount(@AuthenticationPrincipal User user, @RequestParam Long accNo) throws NoSuchException {
+        return ResponseEntity.ok(accountService.findAccountByAccountNo(accNo));
     }
 
     @PutMapping("/deactivate")
-    public String deactivateBankAccount(@AuthenticationPrincipal User user, @RequestParam Long id) throws NoSuchException {
-        user.getEmail();
-        return accountService.deactivate(id);
+    public ResponseEntity<String> deactivateBankAccount(@AuthenticationPrincipal User user, @RequestParam Long id) throws NoSuchException {
+        return ResponseEntity.ok(accountService.deactivate(id));
     }
 
     @PutMapping("/activate")
-    public String activateBankAccount(@AuthenticationPrincipal User user, @RequestParam Long id) throws NoSuchException {
-        user.getEmail();
-        return accountService.activate(id);
+    public ResponseEntity<String> activateBankAccount(@AuthenticationPrincipal User user, @RequestParam Long id) throws NoSuchException {
+        return ResponseEntity.ok(accountService.activate(id));
     }
 
     @DeleteMapping("/delete")
-    public Optional<String> deleteAccount(@AuthenticationPrincipal User user, @RequestParam Long id) {
-        user.getEmail();
-        return accountService.deleteAccount(id);
+    public ResponseEntity<Optional<String>> deleteAccount(@AuthenticationPrincipal User user, @RequestParam Long id) {
+        return ResponseEntity.ok(accountService.deleteAccount(id));
+    }
+
+    /**
+     * send message to kafka
+     *
+     * @param message
+     * @return
+     */
+    @PostMapping("/publish")
+    public ResponseEntity<String> sendMessageToKafkaTopic(@RequestBody String message) {
+        kafkaProducer.sendMessage(message);
+        log.info("message sent to kafka topic : {}", message);
+        return ResponseEntity.ok("Message Successfully Queued to Kafka Topic");
     }
 }

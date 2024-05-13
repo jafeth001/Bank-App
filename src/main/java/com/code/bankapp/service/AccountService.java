@@ -28,8 +28,8 @@ public class AccountService {
                 .orElseThrow(() -> new NoSuchException("user with id " + id + " not found"));
         BankAccount bankAcc = BankAccount
                 .builder()
-                .accountNumber(random.nextInt(999999))
-                .balance(0.0)
+                .accountNumber(random.nextLong(999999))
+                .balance(0.00)
                 .user(existUser)
                 .active(true)
                 .build();
@@ -64,7 +64,7 @@ public class AccountService {
     public List<BankAccount> getAccounts() throws NoSuchException {
         var account = accountRepository.findAll();
         if (account.isEmpty()) {
-            throw new NoSuchException("no transactions found");
+            throw new NoSuchException("no account found");
         }
         return account;
     }
