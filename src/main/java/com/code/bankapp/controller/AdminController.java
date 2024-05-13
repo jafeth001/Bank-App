@@ -2,6 +2,7 @@ package com.code.bankapp.controller;
 
 import com.code.bankapp.exception.ConflictException;
 import com.code.bankapp.exception.NoSuchException;
+import com.code.bankapp.kafka.producer.KafkaProducer;
 import com.code.bankapp.model.BankAccount;
 import com.code.bankapp.model.BankTransactions;
 import com.code.bankapp.model.User;
@@ -23,6 +24,7 @@ import java.util.Optional;
 public class AdminController {
     private final AccountService accountService;
     private final TransactionService transactionService;
+    private final KafkaProducer kafkaProducer;
 
     @GetMapping("/users")
     public List<User> users(@AuthenticationPrincipal User user) throws NoSuchException {
@@ -52,5 +54,17 @@ public class AdminController {
     public Optional<String> deleteAccount(@AuthenticationPrincipal User user, @RequestParam Long id) {
         user.getEmail();
         return accountService.deleteAccount(id);
+    }
+
+    /**
+     * send message to kafka
+     * @param message
+     * @return
+     */
+    @PostMapping("/publish")
+    public ResponseEntity<String> sendMessageToKafkaTopic(@RequestBody String message) {
+        kafkaProducer.sendMessage(message);
+        log.info("message sent to kafka topic : {}", message);
+        return ResponseEntity.ok("Message Successfully Queued to Kafka Topic");
     }
 }
