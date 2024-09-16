@@ -1,12 +1,12 @@
 # Bank APP API
- 1. Authentication & Authorization
+ ## 1. Authentication & Authorization
 
-The authentication service provides endpoints for user registration, account activation, token generation, user login, password reset, and administrative user management. The following are key endpoints for authentication and authorization in the system: User Registration
+### The authentication service provides endpoints for user registration, account activation, token generation, user login, password reset, and administrative user management. The following are key endpoints for authentication and authorization in the system: User Registration
 
-Endpoint: /auth/user/signup
-Method: POST
-Description: Registers a new user and sends an activation email with a token.
-Exceptions:
+### Endpoint: /auth/user/signup
+### Method: POST
+### Description: Registers a new user and sends an activation email with a token.
+### Exceptions:
     ConflictException: Thrown if the user with the provided email already exists.
 
 Activate Account
