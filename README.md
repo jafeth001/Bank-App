@@ -1,5 +1,5 @@
 # Bank APP API
-### 1. Authentication & Authorization
+ 1. Authentication & Authorization
 
 The authentication service provides endpoints for user registration, account activation, token generation, user login, password reset, and administrative user management. The following are key endpoints for authentication and authorization in the system: User Registration
 
@@ -72,7 +72,7 @@ Endpoint: /auth/publish
 Method: POST
 Description: Publishes a message to a Kafka topic.
 
-### 2. Account Management
+ 2. Account Management
 
 Create New Account
 
@@ -124,7 +124,7 @@ Description: Retrieve all transactions.
 Exception: 
 	NoSuchException: If no transactions are available, throw an exception.
 
-### 4. Transaction Management
+ 4. Transaction Management
 
 Deposit Funds
 
@@ -164,7 +164,7 @@ Endpoint: /transaction/publish
 Method: POST
 Description: Publishes a message to a Kafka topic.
 
-### 5. Admin Management
+ 5. Admin Management
 
 The admin management endpoints allow administrators to manage user accounts, including activating, deactivating, and deleting accounts. Additionally, admins can retrieve user details, view specific account information, and publish messages to Kafka. Get All Users
 
