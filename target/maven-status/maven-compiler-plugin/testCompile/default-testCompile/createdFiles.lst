@@ -1,0 +1,5 @@
+com/code/bankapp/repository/UserRepositoryTest.class
+com/code/bankapp/repository/TransactionRepositoryTest.class
+com/code/bankapp/repository/BankAccountRepositoryTest.class
+com/code/bankapp/service/TransactionServiceTest.class
+com/code/bankapp/controller/TransactionControllerTest.class
