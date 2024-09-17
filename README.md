@@ -84,6 +84,15 @@ Create New Account
 	Exception:
 		NoSuchException: If user_id is not available, throw an exception.
 
+Get Specific Account
+
+	Endpoint: /account?id=account_id
+	Method: GET
+	Description: Fetch specific account by account_id.
+	Exception: 
+		NoSuchException: If account_id are not available, throw an exception.
+
+  
 Get All Accounts
 
 	Endpoint: /account/all
@@ -91,6 +100,7 @@ Get All Accounts
 	Description: Fetch all accounts.
 	Exception: 
 		NoSuchException: If accounts are not available, throw an exception.
+  
 
 Get Account Details Endpoint: /account?id=account_id Method: GET Description: Fetch details of a specific account. Exception: NoSuchException: If account_id is not available, throw an exception.
 
