@@ -126,7 +126,6 @@ Get All Transactions
 	Exception: 
 		NoSuchException: If no transactions are available, throw an exception.
 
-### 4. Transaction Management
 
 Deposit Funds
 
@@ -166,7 +165,7 @@ Kafka Messaging
 	Method: POST
 	Description: Publishes a message to a Kafka topic.
 
-### 5. Admin Management
+### 4. Admin Management
 
 The admin management endpoints allow administrators to manage user accounts, including activating, deactivating, and deleting accounts. Additionally, admins can retrieve user details, view specific account information, and publish messages to Kafka. Get All Users
 
